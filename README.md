@@ -30,4 +30,4 @@ Build library via `father-build`,
 $ npm run build
 ```
 
-![image](./39b699d9be734f99a41aee8cf87fbf6a (2).png)
+![](./39b699d9be734f99a41aee8cf87fbf6a (2).png)
