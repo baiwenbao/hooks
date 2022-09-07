@@ -2,6 +2,12 @@
 
 ![](<./39b699d9be734f99a41aee8cf87fbf6a%20(2).png>)
 
+Install
+
+```bash
+$ npm i @baiwenbao/hooks
+```
+
 Install dependencies,
 
 ```bash
@@ -18,16 +24,4 @@ Build documentation,
 
 ```bash
 $ npm run docs:build
-```
-
-Run test,
-
-```bash
-$ npm test
-```
-
-Build library via `father-build`,
-
-```bash
-$ npm run build
 ```
