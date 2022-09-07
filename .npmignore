@@ -1,0 +1,15 @@
+# build/
+dist/
+node_modules/
+.eslintcache
+# posts/
+# public/
+# site/
+.yarnrc
+package-lock.json
+yarn.lock
+.gitignore
+# postcss.config.js
+# tailwind.config.js
+tsconfig.json
+.babelrc

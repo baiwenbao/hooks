@@ -1,0 +1,1 @@
+{"version":3,"file":"plugins.js","sourceRoot":"","sources":["../../../../src/components/crud/ts/plugins.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,iBAAiB,EAAE,MAAM,SAAS,CAAC;AAE5C,IAAM,cAAc,GAAG,cAAe,OAAA,CAAC;IACnC,YAAY,EAAE,IAAI,iBAAiB,CAAqB,CAAC,SAAS,CAAC,CAAC;CACvE,CAAC,EAFoC,CAEpC,CAAC;AAEH,eAAe,cAAc,CAAC"}
