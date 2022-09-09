@@ -1,10 +1,10 @@
-# build/
+build/
 dist/
 node_modules/
 .eslintcache
-# posts/
-# public/
-# site/
+posts/
+public/
+site/
 .yarnrc
 package-lock.json
 yarn.lock
@@ -13,3 +13,4 @@ yarn.lock
 # tailwind.config.js
 tsconfig.json
 .babelrc
+src/
