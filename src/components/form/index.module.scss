@@ -1,0 +1,10 @@
+.table {
+  :global {
+      .ant-form-item {
+          margin: 0;
+      }
+      .ant-form-explain {
+          min-height: 0;
+      }
+  }
+}
