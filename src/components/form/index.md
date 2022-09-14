@@ -413,6 +413,23 @@ const App = () => {
           ],
         },
       },
+      {
+        label: 'upload',
+        field: {
+          name: 'file',
+          type: 'upload',
+          action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+          initialValue:
+            'https://pic1.zhimg.com/v2-751ae4d734d784a2f99bcd5c2f9a3749_1440w.jpg?source=172ae18b',
+          props: {
+            listType: 'picture-card',
+            maxCount: 2,
+            // beforeUpload() {
+            //   return Promise.reject('1');
+            // }
+          },
+        },
+      },
     ],
     buttons: [
       <Button type="primary" onClick={() => handleSubmit()}>
@@ -519,6 +536,13 @@ const App = () => {
 
   const { form, formStore, updateSchema } = useForm({ formConfig });
   const { submit, resetFields, setStatus, $ } = formStore;
+
+  // formStore.plugins.beforeSubmit.tap('check', () => {
+  //   console.log('check');
+  //   return false;
+  // });
+
+  // console.log(formStore.plugins);
 
   const handleSubmit = () => {
     submit((err, values) => {

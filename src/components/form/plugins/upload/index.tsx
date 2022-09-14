@@ -12,30 +12,26 @@ import { pluck, filter, take, delay } from 'rxjs/operators';
 
 export declare type ImgUploadProps<T extends Value | Value[]> = {
   formStore: FormStore;
-  fieldState: IField;
+  fieldState: IField<'upload'>;
   internalValue$: Subject<T>;
   internalValue: T;
   change$: Subject<undefined>;
   blur$: Subject<undefined>;
   onChange: Function;
   /** 单位MB */
-  maxSize?: number;
+  // maxSize?: number;
   /** 获取接口返回url */
-  getResUrl?: Function;
-} & UploadProps;
+  // getResUrl?: Function;
+  props: UploadProps;
+};
 
 const FileUpload = (props: ImgUploadProps<string | string[]>) => {
-  const {
-    fieldState,
-    formStore,
-    maxCount,
-    beforeUpload: originBeforeUpload,
-    onChange,
-    change$,
-    onRemove,
-    ...rest
-  } = props;
-  const { maxSize, getResUrl, value } = fieldState;
+  const { fieldState, formStore, onChange, change$ } = props;
+  const { maxSize, getResUrl, value, props: uploadProps } = fieldState;
+  const onRemove = uploadProps?.onRemove;
+  const originBeforeUpload = uploadProps?.beforeUpload;
+  const maxCount = uploadProps?.maxCount;
+
   const { dispatch, $ } = formStore;
   const [loading, setLoading] = useState<boolean>();
 
@@ -44,6 +40,7 @@ const FileUpload = (props: ImgUploadProps<string | string[]>) => {
     if (!isMatchSize) {
       message.error(`文件大于${maxSize}MB`);
     }
+
     return Promise.resolve(originBeforeUpload ? originBeforeUpload(file, fileList) : true).then(
       () => {
         if (isMatchSize) return true;
@@ -60,7 +57,6 @@ const FileUpload = (props: ImgUploadProps<string | string[]>) => {
     } else if (info.file.status === 'error') {
       setLoading(false);
     }
-
     const updateState = { 'props.fileList': info.fileList };
     if (info.file.status === 'done') {
       if (maxCount && maxCount > 1) {
@@ -77,9 +73,8 @@ const FileUpload = (props: ImgUploadProps<string | string[]>) => {
         });
       }
       info.file.url = getResUrl ? getResUrl(info.file.response) : info.file.url;
+      dispatch(fieldState.name, updateState);
     }
-
-    dispatch(fieldState.name, updateState);
   };
 
   const handleRemove = async (file: UploadFile<any>) => {
@@ -88,12 +83,17 @@ const FileUpload = (props: ImgUploadProps<string | string[]>) => {
       if (result === false) return false;
       const url = getResUrl && file.response ? getResUrl(file.response) : file.url;
 
-      if (maxCount && maxCount > 1 && (fieldState.value as string[])?.length) {
+      if (maxCount && maxCount > 1 && Array.isArray(fieldState.value)) {
+        const fileList = uploadProps.fileList?.filter((file) => file.url !== url);
         dispatch(fieldState.name, {
           value: (fieldState.value as string[]).filter((_url) => _url !== url),
+          'props.fileList': fileList,
         });
       } else {
-        dispatch(fieldState.name, { value: undefined });
+        dispatch(fieldState.name, {
+          value: undefined,
+          'props.fileList': undefined,
+        });
       }
       return true;
     } catch (error) {
@@ -116,6 +116,7 @@ const FileUpload = (props: ImgUploadProps<string | string[]>) => {
   useEffect(() => {
     $(fieldState.name!)
       .pipe(
+        filter((state) => !state.__from__),
         pluck('value'),
         filter((value) => !!value),
         take(1),
@@ -136,14 +137,14 @@ const FileUpload = (props: ImgUploadProps<string | string[]>) => {
 
   return (
     <Upload
-      {...omit(rest, 'value')}
-      fileList={(fieldState.props as UploadProps)?.fileList}
+      {...omit(uploadProps, 'value')}
+      fileList={(fieldState.props as UploadProps)?.fileList || []}
       onRemove={handleRemove}
       maxCount={maxCount}
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >
-      {rest.listType === 'picture-card' ? (
+      {uploadProps?.listType === 'picture-card' ? (
         uploadButton
       ) : (
         <Button icon={<UploadOutlined />}>上传</Button>
