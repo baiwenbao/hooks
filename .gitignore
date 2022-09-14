@@ -8,7 +8,7 @@
 /package-lock.json
 
 # production
-/es
+/esm
 /docs-dist
 
 # misc
@@ -24,3 +24,4 @@
 # ide
 /.vscode
 /.idea
+
