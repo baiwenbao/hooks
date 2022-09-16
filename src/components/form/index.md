@@ -419,14 +419,15 @@ const App = () => {
           name: 'file',
           type: 'upload',
           action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-          initialValue:
-            'https://pic1.zhimg.com/v2-751ae4d734d784a2f99bcd5c2f9a3749_1440w.jpg?source=172ae18b',
+          // initialValue:
+          //   'https://pic1.zhimg.com/v2-751ae4d734d784a2f99bcd5c2f9a3749_1440w.jpg?source=172ae18b',
           props: {
             listType: 'picture-card',
-            maxCount: 2,
-            // beforeUpload() {
-            //   return Promise.reject('1');
-            // }
+            maxCount: 1,
+            beforeUpload() {
+              console.log('upload error');
+              return Promise.reject('1');
+            },
           },
         },
       },
