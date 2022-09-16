@@ -41,12 +41,12 @@ const FileUpload = (props: ImgUploadProps<string | string[]>) => {
       message.error(`文件大于${maxSize}MB`);
     }
 
-    return Promise.resolve(originBeforeUpload ? originBeforeUpload(file, fileList) : true).then(
-      () => {
+    return Promise.resolve(originBeforeUpload ? originBeforeUpload(file, fileList) : true)
+      .then(() => {
         if (isMatchSize) return true;
         return Promise.reject(`文件大于${maxSize}MB`);
-      },
-    );
+      })
+      .catch(() => Upload.LIST_IGNORE);
   };
 
   const handleChange = (info: UploadChangeParam) => {
@@ -73,8 +73,8 @@ const FileUpload = (props: ImgUploadProps<string | string[]>) => {
         });
       }
       info.file.url = getResUrl ? getResUrl(info.file.response) : info.file.url;
-      dispatch(fieldState.name, updateState);
     }
+    dispatch(fieldState.name, updateState);
   };
 
   const handleRemove = async (file: UploadFile<any>) => {

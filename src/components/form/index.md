@@ -418,16 +418,19 @@ const App = () => {
         field: {
           name: 'file',
           type: 'upload',
-          action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+          getResUrl() {
+            return 'https://pic1.zhimg.com/v2-751ae4d734d784a2f99bcd5c2f9a3749_1440w.jpg?source=172ae18b';
+          },
           // initialValue:
           //   'https://pic1.zhimg.com/v2-751ae4d734d784a2f99bcd5c2f9a3749_1440w.jpg?source=172ae18b',
           props: {
+            action: 'https://www.fastmock.site/mock/2d68a1f1e6e438c5b2e28d6b5cdb73ba/a/upload',
             listType: 'picture-card',
             maxCount: 1,
-            beforeUpload() {
-              console.log('upload error');
-              return Promise.reject('1');
-            },
+            // beforeUpload() {
+            //   console.log('upload error');
+            //   return Promise.reject('1');
+            // }
           },
         },
       },
