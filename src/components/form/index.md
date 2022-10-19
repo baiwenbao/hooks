@@ -1072,15 +1072,15 @@ const App = () => {
             },
             {
               label: '千分位并保留一位小数',
-              value: ['thousands', 'float|1'],
+              value: 'thousands,float|1',
             },
             {
               label: '千分位并保留两位小数',
-              value: ['thousands', 'float|2'],
+              value: 'thousands,float|2',
             },
             {
               label: '千分位并自增1',
-              value: ['thousands', 'Number(value) + 1'],
+              value: 'thousands,Number(value) + 1',
             },
           ],
           submit: false,
@@ -1121,7 +1121,7 @@ const App = () => {
     const { $, dispatch } = formStore;
     $('formatter').subscribe((state) => {
       dispatch('content', {
-        format: state.value,
+        format: state.value.split(','),
       });
     });
     $(['formatter', 'content']).subscribe(([formatterState, contentState]) => {
